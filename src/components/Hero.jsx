@@ -67,16 +67,6 @@ function Hero() {
               <span className="relative z-10 drop-shadow-lg font-light tracking-wider">Quero agendar uma sessão personalizada!</span>
             </a>
           </div>
-
-          {/* Espaço para imagem sugerida - Desktop Only */}
-          <div className="hidden md:block pt-12 md:pt-16">
-            {/* Placeholder para imagem - substituir por imagem real */}
-            <div className="w-full max-w-5xl mx-auto h-72 md:h-[500px] bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-3xl flex items-center justify-center shadow-2xl border border-neutral-300/50 overflow-hidden">
-              <p className="text-neutral-400 text-sm md:text-base font-medium">
-                [Imagem sugerida para primeira dobra]
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
