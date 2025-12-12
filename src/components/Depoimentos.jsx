@@ -242,30 +242,34 @@ function Depoimentos() {
         {/* Modal de Vídeo Premium */}
         {selectedVideoIndex !== null && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-2xl p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-2xl p-4 cursor-pointer animate-fade-in-up"
             onClick={() => setSelectedVideoIndex(null)}
             role="dialog"
             aria-modal="true"
             aria-label="Visualização do depoimento em vídeo"
           >
+            {/* Overlay com feedback visual no hover */}
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300"></div>
+            
             {/* Container do modal */}
             <div 
-              className="relative max-w-4xl w-full"
+              className="relative max-w-4xl w-full cursor-default animate-fade-in-up"
               onClick={(e) => e.stopPropagation()}
+              style={{ animationDelay: '0.1s' }}
             >
-              {/* Botão fechar */}
-              <button
-                onClick={() => setSelectedVideoIndex(null)}
-                className="absolute -top-12 right-0 text-white hover:text-green-400 transition-colors duration-300 p-2 rounded-full hover:bg-white/10 z-10"
-                aria-label="Fechar modal"
-              >
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-
               {/* Container do vídeo */}
-              <div className="bg-white/10 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20 p-4 md:p-6">
+              <div className="bg-white/10 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20 p-4 md:p-6 relative">
+                {/* Botão fechar - Dentro do modal */}
+                <button
+                  onClick={() => setSelectedVideoIndex(null)}
+                  className="absolute top-4 right-4 md:top-6 md:right-6 text-white hover:text-green-400 transition-all duration-300 p-2 md:p-2.5 rounded-full hover:bg-white/20 bg-black/40 backdrop-blur-sm z-20 shadow-lg hover:scale-110"
+                  aria-label="Fechar modal"
+                >
+                  <svg className="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+
                 {/* Nome da cliente */}
                 <div className="mb-4 text-center">
                   <p className="text-white font-bold text-lg md:text-xl">
