@@ -719,9 +719,14 @@ A página foi organizada seguindo uma **hierarquia de conversão** otimizada con
 
 ### Depoimentos.jsx (Dobra 4)
 - Título: "O Que Nossas Pacientes Dizem Sobre a Leli"
-- Grid de 3 depoimentos (placeholders para depoimentos reais)
-- Avaliação com estrelas
-- Layout responsivo em grid
+- **Vídeos de depoimentos**: 3 vídeos de clientes reais (Bruna Carvalho, Victoria Pontes, Ana Paula)
+- **Thumbnails com preview**: Atributo `poster` para cada vídeo com ícone de play
+- **Modal premium**: Vídeos abrem em modal com backdrop blur e auto-play
+- **Carrossel horizontal mobile**: Scroll com snap points e indicadores clicáveis
+- **Grid desktop**: Layout em grid responsivo (2 colunas tablet, 3 colunas desktop)
+- **Avaliação com estrelas**: 5 estrelas amarelas em cada card
+- **Botões de navegação**: Ocultos no mobile, visíveis no desktop com glassmorphism
+- **Otimizações mobile**: Tamanhos e espaçamentos reduzidos para melhor UX
 
 ### CTAFinal.jsx (Dobra 5)
 - Título: "Não Espere Mais! Comece a Tratar Suas Dores Agora!"
@@ -933,6 +938,344 @@ A causa raiz foi identificada como uma **condição de corrida entre o pré-empa
 - Transições suaves (duration-500)
 - Hover effects premium (scale, translate, shadow)
 
+## Implementações Especiais
+
+### Implementação: Seção de Depoimentos com Vídeos e Modal Premium
+**Data:** Implementação completa da seção de depoimentos com vídeos  
+**Objetivo:** Transformar a seção de depoimentos em uma experiência premium com vídeos de clientes, thumbnails, modal interativo e design glassmorphism
+
+**Pensamento e Decisões:**
+
+#### 1. Por que Vídeos ao invés de Texto?
+- **Prova social mais forte**: Vídeos transmitem autenticidade e credibilidade
+- **Engajamento visual**: Conteúdo em vídeo prende mais atenção que texto
+- **Experiência imersiva**: Usuário vê e ouve a experiência real das clientes
+- **Diferencial competitivo**: Poucos concorrentes usam vídeos de depoimentos
+
+#### 2. Estrutura de Estados
+```javascript
+const [currentIndex, setCurrentIndex] = useState(0) // Índice do carrossel
+const [isVideoModalOpen, setIsVideoModalOpen] = useState(false) // Controla modal
+const [selectedVideo, setSelectedVideo] = useState(null) // Vídeo selecionado no modal
+```
+
+**Decisão**: Estados separados permitem:
+- Navegação independente no carrossel e no modal
+- Abrir modal em qualquer vídeo sem perder posição do carrossel
+- Melhor controle de estado e performance
+
+#### 3. Thumbnail/Poster para Vídeos
+```javascript
+const depoimentos = [
+  {
+    nome: 'Bruna Carvalho',
+    video: '/videos/video1.mp4',
+    poster: '/videos/video1-poster.jpg', // Thumbnail do vídeo
+    avaliacao: 5,
+  },
+  // ...
+]
+```
+
+**Decisão**: Usar atributo `poster` porque:
+- Melhora performance (não carrega vídeo até clicar)
+- Melhor UX (usuário vê preview antes de assistir)
+- Reduz consumo de dados em mobile
+- Permite design customizado do thumbnail
+
+#### 4. Carrossel Horizontal no Mobile
+```jsx
+{/* Mobile: Carrossel Horizontal */}
+<div className="md:hidden relative">
+  <div 
+    className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-3 px-3"
+    onScroll={handleScroll}
+  >
+    <div className="flex gap-3" style={{ width: 'max-content' }}>
+      {depoimentos.map((depoimento, index) => (
+        <div
+          key={index}
+          data-index={index}
+          className="flex-shrink-0 w-[85vw] snap-center"
+        >
+          {/* Card do depoimento */}
+        </div>
+      ))}
+    </div>
+  </div>
+  {/* Indicadores Mobile */}
+</div>
+```
+
+**Decisão**: Carrossel horizontal no mobile porque:
+- Melhor aproveitamento do espaço vertical
+- Experiência nativa de scroll (swipe)
+- Snap points facilitam navegação
+- Indicadores visuais mostram posição
+
+#### 5. Botões de Navegação Ocultos no Mobile
+```jsx
+{/* Desktop: Carrossel com botões */}
+<div className="hidden md:block">
+  {/* Botões de navegação Desktop */}
+  <button onClick={prevCard} className="absolute left-8...">
+  <button onClick={nextCard} className="absolute right-8...">
+</div>
+```
+
+**Decisão**: Ocultar botões no mobile porque:
+- Scroll horizontal é mais natural em mobile
+- Botões ocupam espaço valioso na tela pequena
+- Indicadores são suficientes para navegação
+- Melhor UX touch (swipe ao invés de toque em botão pequeno)
+
+#### 6. Modal Premium com Backdrop Blur
+```jsx
+{isVideoModalOpen && selectedVideo && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-2xl"
+    onClick={closeVideoModal}
+  >
+    {/* Container do modal */}
+    <div className="relative w-full max-w-xl max-h-[90vh] bg-white/10 backdrop-blur-xl rounded-2xl">
+      {/* Vídeo ampliado */}
+      <video
+        src={selectedVideo}
+        controls
+        autoPlay
+        className="w-full h-full object-contain"
+        playsInline
+      />
+    </div>
+  </div>
+)}
+```
+
+**Decisão**: Modal com backdrop blur porque:
+- Cria foco no vídeo (glassmorphism premium)
+- Melhora experiência visual
+- Segue tendências modernas de design
+- Mantém contexto da página (não é overlay opaco)
+
+### Implementação do Código
+
+#### Estrutura de Dados
+```javascript
+const depoimentos = [
+  {
+    nome: 'Bruna Carvalho',
+    video: '/videos/video1.mp4',
+    poster: '/videos/video1-poster.jpg',
+    avaliacao: 5,
+  },
+  {
+    nome: 'Victoria Pontes',
+    video: '/videos/video2.mp4',
+    poster: '/videos/video2-poster.jpg',
+    avaliacao: 5,
+  },
+  {
+    nome: 'Ana Paula',
+    video: '/videos/video3.mp4',
+    poster: '/videos/video3-poster.jpg',
+    avaliacao: 5,
+  },
+]
+```
+
+#### Card Clicável com Thumbnail
+```jsx
+<div
+  onClick={() => openVideoModal(depoimento.video)}
+  className="group bg-white/90 backdrop-blur-xl rounded-2xl border-2 border-white/40 shadow-2xl hover:shadow-green-500/30 cursor-pointer"
+>
+  {/* Vídeo Thumbnail com Play Button */}
+  <div className="relative w-full mx-auto rounded-xl overflow-hidden mb-3 bg-neutral-100" style={{ aspectRatio: '9/16', maxWidth: '260px' }}>
+    <video
+      src={depoimento.video}
+      poster={depoimento.poster}
+      className="w-full h-full object-cover"
+      preload="metadata"
+      playsInline
+      muted
+    />
+    {/* Overlay com ícone de play */}
+    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 group-hover:opacity-90">
+      <div className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg group-hover:scale-110">
+        <svg className="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  {/* Avaliação com estrelas */}
+  <div className="flex gap-1 mb-2 justify-center">
+    {[...Array(depoimento.avaliacao)].map((_, i) => (
+      <svg key={i} className="w-3.5 h-3.5 text-yellow-400 fill-current">
+        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+      </svg>
+    ))}
+  </div>
+
+  {/* Nome da cliente */}
+  <p className="text-neutral-900 font-bold text-xs text-center">
+    — {depoimento.nome}
+  </p>
+</div>
+```
+
+#### Detecção de Scroll para Indicadores
+```javascript
+const handleScroll = (e) => {
+  const container = e.target
+  const scrollLeft = container.scrollLeft
+  const cardWidth = container.querySelector('[data-index]')?.offsetWidth || 0
+  const gap = 12 // gap-3 = 0.75rem = 12px
+  const newIndex = Math.round(scrollLeft / (cardWidth + gap))
+  setCurrentIndex(Math.min(newIndex, depoimentos.length - 1))
+}
+```
+
+**Decisão**: Calcular índice baseado em scroll porque:
+- Sincroniza indicadores com posição real do carrossel
+- Funciona com snap points
+- Atualiza em tempo real durante scroll
+- Melhor feedback visual para usuário
+
+#### Modal com Auto-play e Controles
+```jsx
+<video
+  src={selectedVideo}
+  controls
+  autoPlay
+  className="w-full h-full object-contain"
+  playsInline
+>
+  Seu navegador não suporta vídeos HTML5.
+</video>
+```
+
+**Decisão**: Auto-play no modal porque:
+- Inicia vídeo imediatamente ao abrir modal
+- Melhor UX (usuário não precisa clicar play novamente)
+- `playsInline` necessário para iOS
+- `controls` permite pausar/controlar volume
+
+#### Fechamento do Modal
+```javascript
+useEffect(() => {
+  const handleEscape = (e) => {
+    if (e.key === 'Escape' && isVideoModalOpen) {
+      closeVideoModal()
+    }
+  }
+
+  if (isVideoModalOpen) {
+    document.addEventListener('keydown', handleEscape)
+    document.body.style.overflow = 'hidden' // Previne scroll
+  }
+
+  return () => {
+    document.removeEventListener('keydown', handleEscape)
+    document.body.style.overflow = 'unset'
+  }
+}, [isVideoModalOpen])
+```
+
+**Decisão**: Múltiplas formas de fechar porque:
+- ESC: Acessibilidade e conveniência
+- Clique fora: Padrão esperado pelos usuários
+- Bloqueio de scroll: Previne scroll acidental durante vídeo
+
+### Funcionalidades Implementadas
+
+✅ **Cards premium com glassmorphism**: `bg-white/90 backdrop-blur-xl`, bordas refinadas, sombras coloridas  
+✅ **Thumbnail/preview de vídeos**: Atributo `poster` com overlay e ícone de play centralizado  
+✅ **Modal de vídeo premium**: Backdrop blur (`backdrop-blur-2xl`), auto-play, controles nativos  
+✅ **Carrossel horizontal mobile**: Scroll com snap points, indicadores clicáveis  
+✅ **Botões de navegação ocultos no mobile**: Apenas indicadores visíveis  
+✅ **Botões de navegação no desktop**: Setas esquerda/direita com glassmorphism  
+✅ **Otimização para vídeos verticais (9:16)**: Aspect ratio mantido, `object-contain`  
+✅ **Avaliação com estrelas**: 5 estrelas amarelas em cada card  
+✅ **Nomes dos clientes ajustados**: Bruna Carvalho, Victoria Pontes, Ana Paula  
+✅ **Acessibilidade completa**: ARIA labels, navegação por teclado, roles apropriados  
+✅ **Responsividade total**: Layouts otimizados para mobile e desktop  
+✅ **Otimizações mobile**: Tamanhos reduzidos (`text-xs`, `w-3.5 h-3.5`, `px-3`, etc.)
+
+### Otimizações Mobile Aplicadas
+
+- **Padding section**: `py-16` (mobile) vs `py-32` (desktop)
+- **Padding horizontal**: `px-3` (mobile) vs `px-4` (desktop)
+- **Título margin**: `mb-12` (mobile) vs `mb-20` (desktop)
+- **Card width**: `w-[85vw]` (mobile) vs grid no desktop
+- **Card padding**: `p-3` (mobile) vs `p-8 md:p-10` (desktop)
+- **Video max-width**: `260px` (mobile) vs `320px` (desktop)
+- **Star icon size**: `w-3.5 h-3.5` (mobile) vs `w-5 h-5` (desktop)
+- **Name text size**: `text-xs` (mobile) vs `text-base` (desktop)
+- **Gap do carrossel**: `gap-3` (12px) ajustado no cálculo de scroll
+
+### Classes CSS Utilizadas
+
+#### Glassmorphism Premium
+- `bg-white/90 backdrop-blur-xl`: Fundo semi-transparente com blur
+- `border-2 border-white/40`: Borda sutil e refinada
+- `shadow-2xl shadow-green-500/30`: Sombra colorida no hover
+
+#### Carrossel Mobile
+- `overflow-x-auto scrollbar-hide`: Scroll horizontal sem barra
+- `snap-x snap-mandatory`: Snap points para navegação suave
+- `flex gap-3`: Espaçamento entre cards
+
+#### Modal
+- `bg-black/90 backdrop-blur-2xl`: Fundo escuro com blur intenso
+- `bg-white/10 backdrop-blur-xl`: Container do modal com glassmorphism
+- `max-w-xl max-h-[90vh]`: Limites responsivos
+
+#### Vídeo
+- `aspect-ratio: '9/16'`: Proporção vertical (stories/Reels)
+- `object-contain`: Mantém proporção sem cortar
+- `playsInline`: Necessário para iOS
+
+### Estrutura de Arquivos Esperada
+
+```
+public/
+└── videos/
+    ├── video1.mp4
+    ├── video1-poster.jpg
+    ├── video2.mp4
+    ├── video2-poster.jpg
+    ├── video3.mp4
+    └── video3-poster.jpg
+```
+
+### Status
+✅ **Implementado e funcionando perfeitamente**
+
+### Lições Aprendidas
+
+1. **Vídeos verticais (9:16)**: Usar `aspect-ratio` e `object-contain` para manter proporção
+2. **Thumbnails são essenciais**: Atributo `poster` melhora UX e performance
+3. **Carrossel mobile**: Scroll horizontal com snap points é melhor que botões pequenos
+4. **Modal premium**: Backdrop blur cria experiência mais sofisticada que overlay opaco
+5. **Auto-play no modal**: Melhor UX quando vídeo inicia automaticamente
+6. **Otimizações mobile**: Reduzir tamanhos e espaçamentos melhora aproveitamento do espaço
+7. **Estados separados**: Carrossel e modal independentes facilitam manutenção
+8. **Acessibilidade**: ESC, ARIA labels e navegação por teclado são essenciais
+
+### Próximas Melhorias Possíveis
+
+- [ ] Adicionar mais vídeos de depoimentos
+- [ ] Implementar lazy loading nos vídeos
+- [ ] Adicionar legendas/transcrições dos vídeos
+- [ ] Implementar analytics de visualização (quais vídeos são mais assistidos)
+- [ ] Adicionar filtros por categoria (se houver diferentes tipos de depoimentos)
+- [ ] Otimizar vídeos para diferentes resoluções (adaptive streaming)
+- [ ] Adicionar compartilhamento social dos depoimentos
+
+---
+
 ## Status do Projeto
 
 ✅ **Tailwind CSS v4 configurado**  
@@ -941,7 +1284,7 @@ A causa raiz foi identificada como uma **condição de corrida entre o pré-empa
 ✅ **Hero Section (Dobra 1) implementada com design premium**  
 ✅ **Seção "Como Funciona" (Dobra 2) implementada com cards premium**  
 ✅ **Seção "Benefícios" (Dobra 3) com carrossel premium implementada**  
-✅ **Seção "Depoimentos" (Dobra 4) implementada com design premium**  
+✅ **Seção "Depoimentos" (Dobra 4) implementada com vídeos, modal premium e design glassmorphism**  
 ✅ **Seção CTA Final (Dobra 5) implementada com visual impactante**  
 ✅ **Footer implementado com design premium**  
 ✅ **Botão WhatsApp flutuante implementado com animações premium**  
@@ -982,7 +1325,7 @@ A causa raiz foi identificada como uma **condição de corrida entre o pré-empa
 
 ### Implementações Pendentes
 - [ ] **Configurar número de WhatsApp real** em `src/config/whatsapp.js` (atualmente placeholder: 5511999999999)
-- [ ] Adicionar depoimentos reais (substituir placeholders na seção Depoimentos)
+- [x] ✅ **Depoimentos com vídeos implementados** (vídeos, thumbnails, modal premium, carrossel mobile)
 - [ ] Adicionar imagens reais nas seções indicadas:
   - [ ] Imagem na primeira dobra (Hero)
   - [ ] Imagem na segunda dobra (Como Funciona)
