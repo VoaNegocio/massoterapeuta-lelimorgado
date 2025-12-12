@@ -4,7 +4,7 @@ function CTAFinal() {
   const whatsappUrl = getWhatsAppUrl('ctaFinal')
 
   return (
-    <section id="cta-final" className="py-20 md:py-32 px-4 bg-gradient-to-br from-green-50/80 via-emerald-50/60 to-green-100/40 relative overflow-hidden">
+    <section id="cta-final" className="py-16 md:py-32 px-3 md:px-4 bg-gradient-to-br from-green-50/80 via-emerald-50/60 to-green-100/40 relative overflow-hidden">
       {/* Decorative elements - Premium */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-green-300/30 to-emerald-300/25 rounded-full blur-3xl animate-pulse-slow"></div>
@@ -14,17 +14,17 @@ function CTAFinal() {
       
       <div className="max-w-5xl mx-auto text-center relative z-10">
         {/* Título */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 mb-8 tracking-tight">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 mb-6 md:mb-8 tracking-tight">
           Não Espere Mais! Comece a Tratar Suas Dores Agora!
         </h2>
 
         {/* Texto */}
-        <p className="text-xl md:text-2xl text-neutral-700 leading-relaxed mb-12 max-w-4xl mx-auto font-light">
+        <p className="text-lg md:text-2xl text-neutral-700 leading-relaxed mb-10 md:mb-12 max-w-4xl mx-auto font-light">
           Se você está cansada de conviver com dores constantes e deseja uma solução eficaz, a Leli é a escolha certa. Agende sua avaliação agora e comece a sentir os benefícios de um atendimento humanizado e terapias integrativas.
         </p>
 
         {/* Foto da Leli */}
-        <div className="mb-12 md:mb-16">
+        <div className="mb-10 md:mb-16">
           <div className="w-full max-w-2xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-neutral-300/50">
             <img
               src="/fotoleli2.jpg"
@@ -41,14 +41,14 @@ function CTAFinal() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-12 py-6 md:px-16 md:py-7 rounded-3xl font-bold text-xl md:text-2xl shadow-2xl shadow-green-500/50 hover:shadow-green-500/70 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
+            className="group inline-flex items-center gap-3 md:gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-10 py-5 md:px-16 md:py-7 rounded-3xl font-bold text-lg md:text-2xl shadow-2xl shadow-green-500/50 hover:shadow-green-500/70 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
           >
             {/* Shimmer effect */}
             <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             {/* Glow effect */}
             <span className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/50 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></span>
             <svg
-              className="w-8 h-8 relative z-10 drop-shadow-lg"
+              className="w-7 h-7 md:w-8 md:h-8 relative z-10 drop-shadow-lg"
               fill="currentColor"
               viewBox="0 0 24 24"
             >

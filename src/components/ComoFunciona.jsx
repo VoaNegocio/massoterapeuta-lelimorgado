@@ -59,10 +59,10 @@ function ComoFunciona() {
   ]
 
   return (
-    <section id="como-funciona" className="py-20 md:py-32 px-4 bg-gradient-to-b from-white via-neutral-50/30 to-white">
+    <section id="como-funciona" className="py-16 md:py-32 px-3 md:px-4 bg-gradient-to-b from-white via-neutral-50/30 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Título */}
-        <div className="text-center mb-16 md:mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 mb-6 tracking-tight">
             Como Funciona o Atendimento com a Leli?
           </h2>
@@ -70,9 +70,9 @@ function ComoFunciona() {
         </div>
 
         {/* Imagem do ambiente - Clicável para modal */}
-        <div className="mb-16 md:mb-20">
+        <div className="mb-12 md:mb-20">
           <div 
-            className="w-full max-w-5xl mx-auto h-72 md:h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-neutral-300/50 cursor-pointer group hover:scale-[1.02] transition-transform duration-300 relative"
+            className="w-full max-w-5xl mx-auto h-64 md:h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-neutral-300/50 cursor-pointer group hover:scale-[1.02] transition-transform duration-300 relative"
             onClick={() => setIsImageModalOpen(true)}
             role="button"
             tabIndex={0}
@@ -102,20 +102,20 @@ function ComoFunciona() {
         </div>
 
         {/* Passos - Carrossel Horizontal Mobile / Grid Desktop */}
-        <div className="mb-16 md:mb-20">
+        <div className="mb-12 md:mb-20">
           {/* Mobile: Carrossel Horizontal */}
           <div className="md:hidden relative">
             <div 
-              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4" 
+              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-3 px-3" 
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               onScroll={handleScroll}
             >
-              <div className="flex gap-4" style={{ width: 'max-content' }}>
+              <div className="flex gap-3" style={{ width: 'max-content' }}>
                 {passos.map((passo, index) => (
                   <div
                     key={index}
                     data-index={index}
-                    className="group relative bg-white p-6 rounded-2xl border border-neutral-200/50 shadow-lg flex-shrink-0 w-[85vw] max-w-sm snap-center"
+                    className="group relative bg-white p-5 rounded-2xl border border-neutral-200/50 shadow-lg flex-shrink-0 w-[90vw] max-w-sm snap-center"
                   >
                     {/* Gradiente de fundo no hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-green-50/0 to-emerald-50/0 group-hover:from-green-50/50 group-hover:to-emerald-50/50 transition-all duration-500 rounded-2xl"></div>
@@ -240,14 +240,14 @@ function ComoFunciona() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-10 py-5 md:px-12 md:py-6 rounded-3xl font-bold text-lg md:text-xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
+                  className="group inline-flex items-center gap-3 md:gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 md:px-12 md:py-6 rounded-3xl font-bold text-base md:text-xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
                 >
                   {/* Shimmer effect */}
                   <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
                   {/* Glow effect */}
                   <span className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/50 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></span>
                   <svg
-                    className="w-7 h-7 relative z-10 drop-shadow-lg"
+                    className="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-lg"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >

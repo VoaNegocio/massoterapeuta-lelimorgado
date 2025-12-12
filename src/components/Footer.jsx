@@ -4,23 +4,23 @@ function Footer() {
   const whatsappUrl = getWhatsAppUrl('footer')
 
   return (
-    <footer className="bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-neutral-300 py-16 md:py-20 px-4 border-t border-neutral-700/50">
+    <footer className="bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-neutral-300 py-12 md:py-20 px-3 md:px-4 border-t border-neutral-700/50">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mb-10 md:mb-12">
           {/* Sobre */}
           <div>
-            <h3 className="text-white font-extrabold text-xl mb-6 tracking-tight">
+            <h3 className="text-white font-extrabold text-lg md:text-xl mb-4 md:mb-6 tracking-tight">
               LELI MORGADO MASSOTERAPEUTA
             </h3>
-            <p className="text-neutral-400 leading-relaxed text-base">
+            <p className="text-neutral-400 leading-relaxed text-sm md:text-base">
               Tratamento personalizado combinando massoterapia e terapias complementares para alívio de dores crônicas e bem-estar.
             </p>
           </div>
 
           {/* Links Rápidos */}
           <div>
-            <h3 className="text-white font-extrabold text-xl mb-6 tracking-tight">Links Rápidos</h3>
-            <nav className="space-y-3">
+            <h3 className="text-white font-extrabold text-lg md:text-xl mb-4 md:mb-6 tracking-tight">Links Rápidos</h3>
+            <nav className="space-y-2 md:space-y-3">
               <a
                 href="#inicio"
                 className="block text-neutral-400 hover:text-green-400 transition-all duration-300 font-medium hover:translate-x-1"
@@ -50,7 +50,7 @@ function Footer() {
 
           {/* Contato */}
           <div>
-            <h3 className="text-white font-extrabold text-xl mb-6 tracking-tight">Contato</h3>
+            <h3 className="text-white font-extrabold text-lg md:text-xl mb-4 md:mb-6 tracking-tight">Contato</h3>
             <a
               href={whatsappUrl}
               target="_blank"

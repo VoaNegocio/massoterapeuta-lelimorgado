@@ -33,10 +33,10 @@ function Depoimentos() {
   }
 
   return (
-    <section id="depoimentos" className="py-20 md:py-32 px-4 bg-gradient-to-b from-white via-neutral-50/30 to-white">
+    <section id="depoimentos" className="py-16 md:py-32 px-3 md:px-4 bg-gradient-to-b from-white via-neutral-50/30 to-white">
       <div className="max-w-7xl mx-auto">
         {/* Título */}
-        <div className="text-center mb-16 md:mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 mb-6 tracking-tight">
             O Que Nossas Pacientes Dizem Sobre a Leli
           </h2>
@@ -49,23 +49,23 @@ function Depoimentos() {
           <div className="md:hidden relative">
             <div 
               id="depoimentos-carousel"
-              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4" 
+              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-3 px-3" 
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               onScroll={handleScroll}
             >
-              <div className="flex gap-4" style={{ width: 'max-content' }}>
+              <div className="flex gap-3" style={{ width: 'max-content' }}>
                 {depoimentos.map((depoimento, index) => (
                   <div
                     key={index}
                     data-index={index}
-                    className="group bg-white/95 backdrop-blur-md rounded-2xl border-2 border-neutral-200/60 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 flex-shrink-0 w-[75vw] max-w-[320px] snap-center overflow-hidden transition-all duration-500"
+                    className="group bg-white/95 backdrop-blur-md rounded-2xl border-2 border-neutral-200/60 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 flex-shrink-0 w-[85vw] max-w-[320px] snap-center overflow-hidden transition-all duration-500"
                   >
                     {/* Gradiente sutil no hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-green-50/0 to-emerald-50/0 group-hover:from-green-50/30 group-hover:to-emerald-50/30 transition-all duration-500 rounded-2xl z-10 pointer-events-none"></div>
                     
-                    <div className="relative z-20 p-4">
+                    <div className="relative z-20 p-3">
                       {/* Vídeo Vertical 9:16 */}
-                      <div className="relative w-full mx-auto rounded-xl overflow-hidden mb-4 bg-neutral-100" style={{ aspectRatio: '9/16', maxWidth: '280px' }}>
+                      <div className="relative w-full mx-auto rounded-xl overflow-hidden mb-3 bg-neutral-100" style={{ aspectRatio: '9/16', maxWidth: '260px' }}>
                         <video
                           src={depoimento.video}
                           controls
@@ -78,11 +78,11 @@ function Depoimentos() {
                       </div>
 
                       {/* Avaliação com estrelas */}
-                      <div className="flex gap-1 mb-3 justify-center">
+                      <div className="flex gap-1 mb-2 justify-center">
                         {[...Array(depoimento.avaliacao)].map((_, i) => (
                           <svg
                             key={i}
-                            className="w-4 h-4 text-yellow-400 fill-current drop-shadow-sm"
+                            className="w-3.5 h-3.5 text-yellow-400 fill-current drop-shadow-sm"
                             viewBox="0 0 20 20"
                           >
                             <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
@@ -91,7 +91,7 @@ function Depoimentos() {
                       </div>
 
                       {/* Nome da cliente */}
-                      <p className="text-neutral-900 font-bold text-sm text-center">
+                      <p className="text-neutral-900 font-bold text-xs text-center">
                         — {depoimento.nome}
                       </p>
                     </div>

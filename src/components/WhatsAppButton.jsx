@@ -8,11 +8,11 @@ function WhatsAppButton() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-8 right-8 z-50 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-5 rounded-full shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 transition-all duration-500 hover:scale-110 group animate-pulse-slow"
+      className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 md:p-5 rounded-full shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 transition-all duration-500 hover:scale-110 group animate-pulse-slow"
       aria-label="Falar no WhatsApp"
     >
       <svg
-        className="w-7 h-7"
+        className="w-6 h-6 md:w-7 md:h-7"
         fill="currentColor"
         viewBox="0 0 24 24"
       >

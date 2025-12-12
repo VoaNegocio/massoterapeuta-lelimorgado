@@ -4,7 +4,7 @@ function Hero() {
   const whatsappUrl = getWhatsAppUrl('hero')
 
   return (
-    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50/40 via-white to-green-50/20 md:bg-gradient-to-br md:from-emerald-50/40 md:via-white md:to-green-50/20 pt-20 md:pt-24 overflow-hidden">
+    <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50/40 via-white to-green-50/20 md:bg-gradient-to-br md:from-emerald-50/40 md:via-white md:to-green-50/20 pt-16 md:pt-24 overflow-hidden">
       {/* Background Image - Mobile Only */}
       <div 
         className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
@@ -21,8 +21,8 @@ function Hero() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-green-200/15 to-emerald-200/10 rounded-full blur-3xl"></div>
       </div>
       
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-16 md:py-24 relative z-10">
-        <div className="text-center space-y-8 md:space-y-12">
+      <div className="max-w-7xl mx-auto px-3 md:px-8 lg:px-12 py-12 md:py-24 relative z-10">
+        <div className="text-center space-y-6 md:space-y-12">
           {/* Headline Principal */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white md:text-neutral-900 leading-[1.1] max-w-6xl mx-auto tracking-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] md:drop-shadow-none">
             Alivie Suas Dores Crônicas em Apenas{' '}
@@ -38,19 +38,19 @@ function Hero() {
           </p>
 
           {/* CTA Principal - Premium */}
-          <div className="pt-8">
+          <div className="pt-6 md:pt-8">
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-10 py-5 md:px-12 md:py-6 rounded-3xl font-bold text-lg md:text-xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
+              className="group inline-flex items-center gap-3 md:gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 md:px-12 md:py-6 rounded-3xl font-bold text-base md:text-xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
             >
               {/* Shimmer effect */}
               <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
               {/* Glow effect */}
               <span className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/50 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></span>
               <svg
-                className="w-7 h-7 relative z-10 drop-shadow-lg"
+                className="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-lg"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >

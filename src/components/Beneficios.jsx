@@ -71,7 +71,7 @@ function Beneficios() {
   return (
     <section 
       id="beneficios" 
-      className="py-20 md:py-32 px-4 bg-gradient-to-b from-white via-emerald-50/20 to-white relative overflow-hidden"
+      className="py-16 md:py-32 px-3 md:px-4 bg-gradient-to-b from-white via-emerald-50/20 to-white relative overflow-hidden"
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="region"
@@ -85,7 +85,7 @@ function Beneficios() {
       
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Título */}
-        <div className="text-center mb-16 md:mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 mb-6 tracking-tight">
             Sinta o Alívio e o Relaxamento Profundo Que Seu Corpo Merece
           </h2>
@@ -93,7 +93,7 @@ function Beneficios() {
         </div>
 
         {/* Carrossel de Benefícios */}
-        <div className="relative mb-12 md:mb-16">
+        <div className="relative mb-10 md:mb-16">
           {/* Container do carrossel */}
           <div className="overflow-hidden rounded-2xl">
             <div
@@ -103,17 +103,17 @@ function Beneficios() {
               {beneficios.map((beneficio, index) => (
                 <div
                   key={index}
-                  className="min-w-full px-4 md:px-8"
+                  className="min-w-full px-3 md:px-8"
                 >
-                  <div className="bg-white/95 backdrop-blur-md p-10 md:p-16 rounded-3xl shadow-2xl border-2 border-neutral-200/60 hover:border-green-300/60 transition-all duration-500 hover:shadow-green-500/20">
+                  <div className="bg-white/95 backdrop-blur-md p-8 md:p-16 rounded-3xl shadow-2xl border-2 border-neutral-200/60 hover:border-green-300/60 transition-all duration-500 hover:shadow-green-500/20">
                     <div className="text-center max-w-4xl mx-auto">
-                      <div className="text-7xl md:text-8xl mb-8 transform hover:scale-110 transition-transform duration-300">
+                      <div className="text-6xl md:text-8xl mb-6 md:mb-8 transform hover:scale-110 transition-transform duration-300">
                         {beneficio.icone}
                       </div>
-                      <h3 className="text-3xl md:text-4xl font-extrabold text-neutral-900 mb-6 leading-tight">
+                      <h3 className="text-2xl md:text-4xl font-extrabold text-neutral-900 mb-4 md:mb-6 leading-tight">
                         {beneficio.titulo}
                       </h3>
-                      <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed font-light">
+                      <p className="text-lg md:text-2xl text-neutral-600 leading-relaxed font-light">
                         {beneficio.descricao}
                       </p>
                     </div>
@@ -126,11 +126,11 @@ function Beneficios() {
           {/* Botões de navegação */}
           <button
             onClick={prevCard}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
+            className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-3 md:p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
             aria-label="Card anterior"
           >
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5 md:w-6 md:h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -145,11 +145,11 @@ function Beneficios() {
           </button>
           <button
             onClick={nextCard}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
+            className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-3 md:p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
             aria-label="Próximo card"
           >
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5 md:w-6 md:h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -181,7 +181,7 @@ function Beneficios() {
         </div>
 
         {/* Imagem dos óleos essenciais - Clicável para modal */}
-        <div className="mb-16 md:mb-20">
+        <div className="mb-12 md:mb-20">
           <div
             className="w-full max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-neutral-300/50 cursor-pointer group hover:scale-[1.02] transition-transform duration-300 relative"
             onClick={() => setIsImageModalOpen(true)}
@@ -213,24 +213,24 @@ function Beneficios() {
         </div>
 
         {/* Solução para as Dores */}
-        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100/50 p-10 md:p-16 rounded-3xl mb-16 md:mb-20 border border-green-200/50 shadow-2xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100/50 p-8 md:p-16 rounded-3xl mb-12 md:mb-20 border border-green-200/50 shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5"></div>
           <div className="max-w-5xl mx-auto text-center relative z-10">
-            <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-900 leading-relaxed mb-8">
+            <p className="text-xl md:text-3xl lg:text-4xl font-bold text-neutral-900 leading-relaxed mb-6 md:mb-8">
               Você merece mais do que só alívio. Combinamos técnicas de massoterapia, fisioterapia e óleos essenciais para tratar sua dor de maneira eficaz e duradoura.
             </p>
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-10 py-5 md:px-12 md:py-6 rounded-3xl font-bold text-lg md:text-xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
+                    className="group inline-flex items-center gap-3 md:gap-4 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 md:px-12 md:py-6 rounded-3xl font-bold text-base md:text-xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/20"
                   >
                     {/* Shimmer effect */}
                     <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
                     {/* Glow effect */}
                     <span className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/50 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></span>
                     <svg
-                      className="w-7 h-7 relative z-10 drop-shadow-lg"
+                      className="w-6 h-6 md:w-7 md:h-7 relative z-10 drop-shadow-lg"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
