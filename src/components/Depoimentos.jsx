@@ -112,9 +112,9 @@ function Depoimentos() {
                         
                         {/* Ícone de Play Premium */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-white/95 backdrop-blur-md rounded-full p-4 md:p-5 shadow-2xl transform group-hover:scale-110 transition-all duration-300 border-2 border-white/60">
+                          <div className="bg-white/30 backdrop-blur-2xl rounded-full p-4 md:p-5 shadow-xl transform group-hover:scale-110 group-hover:bg-white/60 group-hover:shadow-2xl transition-all duration-300 border border-white/20">
                             <svg
-                              className="w-8 h-8 md:w-10 md:h-10 text-green-600 ml-1"
+                              className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover:text-green-100 group-hover:drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)] transition-all duration-300 ml-1"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -204,9 +204,9 @@ function Depoimentos() {
                     
                     {/* Ícone de Play Premium */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-white/95 backdrop-blur-md rounded-full p-5 md:p-6 shadow-2xl transform group-hover:scale-110 transition-all duration-300 border-2 border-white/60">
+                      <div className="bg-white/30 backdrop-blur-2xl rounded-full p-5 md:p-6 shadow-xl transform group-hover:scale-110 group-hover:bg-white/60 group-hover:shadow-2xl transition-all duration-300 border border-white/20">
                         <svg
-                          className="w-10 h-10 md:w-12 md:h-12 text-green-600 ml-1"
+                          className="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] group-hover:text-green-100 group-hover:drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)] transition-all duration-300 ml-1"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
