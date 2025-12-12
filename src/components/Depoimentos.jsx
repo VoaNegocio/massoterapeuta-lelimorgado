@@ -19,7 +19,7 @@ function Depoimentos() {
       avaliacao: 5,
     },
     {
-      nome: 'Maria Isabel',
+      nome: 'Vanessa Fradique',
       video: '/videos/video3.mp4',
       foto: '/maria-isabel-img1.jpg', // Foto da cliente como preview
       avaliacao: 5,
@@ -60,7 +60,7 @@ function Depoimentos() {
       <div className="max-w-7xl mx-auto">
         {/* Título */}
         <div className="text-center mb-12 md:mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-neutral-900 mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-wider text-neutral-900 mb-6">
             O Que Nossas Pacientes Dizem Sobre a Leli
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto rounded-full"></div>
@@ -138,7 +138,7 @@ function Depoimentos() {
                       </div>
 
                       {/* Nome da cliente */}
-                      <p className="text-neutral-900 font-bold text-xs text-center">
+                      <p className="text-neutral-900 font-light tracking-wide text-xs text-center">
                         — {depoimento.nome}
                       </p>
                     </div>
@@ -230,7 +230,7 @@ function Depoimentos() {
                   </div>
 
                   {/* Nome da cliente */}
-                  <p className="text-neutral-900 font-bold text-base text-center">
+                  <p className="text-neutral-900 font-light tracking-wide text-base text-center">
                     — {depoimento.nome}
                   </p>
                 </div>
@@ -272,7 +272,7 @@ function Depoimentos() {
 
                 {/* Nome da cliente */}
                 <div className="mb-4 text-center">
-                  <p className="text-white font-bold text-lg md:text-xl">
+                  <p className="text-white font-light tracking-wide text-lg md:text-xl">
                     — {depoimentos[selectedVideoIndex].nome}
                   </p>
                   {/* Estrelas */}

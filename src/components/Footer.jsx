@@ -9,7 +9,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mb-10 md:mb-12">
           {/* Sobre */}
           <div>
-            <h3 className="text-white font-extrabold text-lg md:text-xl mb-4 md:mb-6 tracking-tight">
+            <h3 className="text-white font-light tracking-wider text-lg md:text-xl mb-4 md:mb-6">
               LELI MORGADO MASSOTERAPEUTA
             </h3>
             <p className="text-neutral-400 leading-relaxed text-sm md:text-base">
@@ -19,7 +19,7 @@ function Footer() {
 
           {/* Links Rápidos */}
           <div>
-            <h3 className="text-white font-extrabold text-lg md:text-xl mb-4 md:mb-6 tracking-tight">Links Rápidos</h3>
+            <h3 className="text-white font-light tracking-wider text-lg md:text-xl mb-4 md:mb-6">Links Rápidos</h3>
             <nav className="space-y-2 md:space-y-3">
               <a
                 href="#inicio"
@@ -50,7 +50,7 @@ function Footer() {
 
           {/* Contato */}
           <div>
-            <h3 className="text-white font-extrabold text-lg md:text-xl mb-4 md:mb-6 tracking-tight">Contato</h3>
+            <h3 className="text-white font-light tracking-wider text-lg md:text-xl mb-4 md:mb-6">Contato</h3>
             <a
               href={whatsappUrl}
               target="_blank"

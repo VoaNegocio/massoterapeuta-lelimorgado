@@ -10,20 +10,17 @@ function Header() {
       
       <div className="relative max-w-7xl mx-auto px-3 md:px-8 lg:px-12">
         <div className="flex items-center justify-center h-16 md:h-24">
-          {/* Logo/Nome - Clicável para topo */}
+          {/* Logo - Clicável para topo */}
           <button
             onClick={scrollToTop}
             className="flex items-center group cursor-pointer transition-all duration-300 hover:scale-105"
             aria-label="Ir para o topo da página"
           >
-            <div className="text-center">
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-neutral-900 leading-tight tracking-tight group-hover:text-green-600 transition-colors duration-300">
-                LELI MORGADO
-              </h1>
-              <span className="text-xs md:text-sm lg:text-base font-light text-neutral-600 tracking-wider group-hover:text-green-700 transition-colors duration-300">
-                MASSOTERAPEUTA
-              </span>
-            </div>
+            <img
+              src="/logo-da-leli.png"
+              alt="Leli Morgado Massoterapeuta"
+              className="h-10 md:h-14 lg:h-16 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+            />
           </button>
         </div>
       </div>
