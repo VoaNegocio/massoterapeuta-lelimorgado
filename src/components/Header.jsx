@@ -5,8 +5,8 @@ function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      {/* Liquid Glass - Estilo Apple */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/8 to-white/10 backdrop-blur-3xl border-b border-white/5 shadow-lg shadow-black/5"></div>
+      {/* Blur e Background Branco */}
+      <div className="absolute inset-0 bg-white/50 backdrop-blur-xl border-b border-neutral-200/50"></div>
       
       <div className="relative max-w-7xl mx-auto px-3 md:px-8 lg:px-12">
         <div className="flex items-center justify-center h-20 md:h-28">
