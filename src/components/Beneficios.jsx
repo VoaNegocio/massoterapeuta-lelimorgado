@@ -38,6 +38,16 @@ function Beneficios() {
     setCurrentIndex((prev) => (prev - 1 + beneficios.length) % beneficios.length)
   }
 
+  // Detectar scroll para atualizar indicadores (mobile)
+  const handleScroll = (e) => {
+    const container = e.target
+    const scrollLeft = container.scrollLeft
+    const cardWidth = container.querySelector('[data-index]')?.offsetWidth || 0
+    const gap = 12 // gap-3 = 0.75rem = 12px
+    const newIndex = Math.round(scrollLeft / (cardWidth + gap))
+    setCurrentIndex(Math.min(newIndex, beneficios.length - 1))
+  }
+
   // Navegação por teclado
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowLeft') {
@@ -94,89 +104,143 @@ function Beneficios() {
 
         {/* Carrossel de Benefícios */}
         <div className="relative mb-10 md:mb-16">
-          {/* Container do carrossel */}
-          <div className="overflow-hidden rounded-2xl">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          {/* Mobile: Carrossel Horizontal com Scroll */}
+          <div className="md:hidden relative">
+            <div 
+              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-3 px-3" 
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              onScroll={handleScroll}
             >
-              {beneficios.map((beneficio, index) => (
-                <div
-                  key={index}
-                  className="min-w-full px-3 md:px-8"
-                >
-                  <div className="bg-white/95 backdrop-blur-md p-8 md:p-16 rounded-3xl shadow-2xl border-2 border-neutral-200/60 hover:border-green-300/60 transition-all duration-500 hover:shadow-green-500/20">
+              <div className="flex gap-3" style={{ width: 'max-content' }}>
+                {beneficios.map((beneficio, index) => (
+                  <div
+                    key={index}
+                    data-index={index}
+                    className="group bg-white/95 backdrop-blur-md p-6 rounded-2xl border-2 border-neutral-200/60 shadow-xl flex-shrink-0 w-[90vw] max-w-sm snap-center"
+                  >
                     <div className="text-center max-w-4xl mx-auto">
-                      <div className="text-6xl md:text-8xl mb-6 md:mb-8 transform hover:scale-110 transition-transform duration-300">
+                      <div className="text-6xl mb-6 transform hover:scale-110 transition-transform duration-300">
                         {beneficio.icone}
                       </div>
-                      <h3 className="text-2xl md:text-4xl font-extrabold text-neutral-900 mb-4 md:mb-6 leading-tight">
+                      <h3 className="text-2xl font-extrabold text-neutral-900 mb-4 leading-tight">
                         {beneficio.titulo}
                       </h3>
-                      <p className="text-lg md:text-2xl text-neutral-600 leading-relaxed font-light">
+                      <p className="text-lg text-neutral-600 leading-relaxed font-light">
                         {beneficio.descricao}
                       </p>
                     </div>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Indicadores Mobile */}
+            <div className="flex justify-center gap-2 mt-6">
+              {beneficios.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    const container = document.querySelector('.overflow-x-auto')
+                    const card = container?.querySelector(`[data-index="${index}"]`)
+                    card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+                  }}
+                  className={`h-2 rounded-full transition-all ${
+                    index === currentIndex
+                      ? 'bg-green-600 w-8'
+                      : 'bg-neutral-300 w-2'
+                  }`}
+                  aria-label={`Ir para card ${index + 1}`}
+                />
               ))}
             </div>
           </div>
 
-          {/* Botões de navegação */}
-          <button
-            onClick={prevCard}
-            className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-3 md:p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
-            aria-label="Card anterior"
-          >
-            <svg
-              className="w-5 h-5 md:w-6 md:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={nextCard}
-            className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-3 md:p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
-            aria-label="Próximo card"
-          >
-            <svg
-              className="w-5 h-5 md:w-6 md:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+          {/* Desktop: Carrossel com Transform */}
+          <div className="hidden md:block relative">
+            {/* Container do carrossel */}
+            <div className="overflow-hidden rounded-2xl">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              >
+                {beneficios.map((beneficio, index) => (
+                  <div
+                    key={index}
+                    className="min-w-full px-8"
+                  >
+                    <div className="bg-white/95 backdrop-blur-md p-16 rounded-3xl shadow-2xl border-2 border-neutral-200/60 hover:border-green-300/60 transition-all duration-500 hover:shadow-green-500/20">
+                      <div className="text-center max-w-4xl mx-auto">
+                        <div className="text-8xl mb-8 transform hover:scale-110 transition-transform duration-300">
+                          {beneficio.icone}
+                        </div>
+                        <h3 className="text-4xl font-extrabold text-neutral-900 mb-6 leading-tight">
+                          {beneficio.titulo}
+                        </h3>
+                        <p className="text-2xl text-neutral-600 leading-relaxed font-light">
+                          {beneficio.descricao}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          {/* Indicadores */}
-          <div className="flex justify-center gap-2 mt-6">
-            {beneficios.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentIndex
-                    ? 'bg-green-600 w-8'
-                    : 'bg-neutral-300 hover:bg-neutral-400'
-                }`}
-                aria-label={`Ir para card ${index + 1}`}
-              />
-            ))}
+            {/* Botões de navegação - Desktop Only */}
+            <button
+              onClick={prevCard}
+              className="absolute left-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
+              aria-label="Card anterior"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={nextCard}
+              className="absolute right-8 top-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-md hover:bg-white text-neutral-700 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 z-10 border border-neutral-200/50"
+              aria-label="Próximo card"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Indicadores Desktop */}
+            <div className="flex justify-center gap-2 mt-6">
+              {beneficios.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentIndex
+                      ? 'bg-green-600 w-8'
+                      : 'bg-neutral-300 hover:bg-neutral-400'
+                  }`}
+                  aria-label={`Ir para card ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
