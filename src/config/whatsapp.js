@@ -5,8 +5,8 @@
  */
 
 export const WHATSAPP_CONFIG = {
-  // Número do WhatsApp (formato: 5511999999999 - sem espaços, parênteses ou hífens)
-  number: '5511999999999', // ⚠️ SUBSTITUIR PELO NÚMERO REAL
+  // Número do WhatsApp (formato: 5516993962305 - sem espaços, parênteses ou hífens)
+  number: '5516993962305', // ✅ Número real da Leli Morgado
   
   // Mensagens pré-formatadas para diferentes contextos
   messages: {

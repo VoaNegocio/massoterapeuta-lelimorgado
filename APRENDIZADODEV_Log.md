@@ -1791,6 +1791,560 @@ const whatsappUrl = getWhatsAppUrl('hero')
 
 ---
 
+### Implementação: Google Tag Manager (GTM) - Estrutura Completa
+**Data:** Implementação completa do GTM  
+**Objetivo:** Criar estrutura robusta para rastreamento de eventos e analytics
+
+**Pensamento e Decisões:**
+
+#### 1. Por que Google Tag Manager?
+- **Flexibilidade**: Adicionar/modificar tags sem alterar código
+- **Centralização**: Todos os scripts de tracking em um lugar
+- **Performance**: Carrega assíncrono sem bloquear renderização
+- **Debugging**: Modo Preview facilita testes
+- **Futuro**: Fácil adicionar Facebook Pixel, Hotjar, etc.
+
+#### 2. Estrutura de Arquivos Criada
+```
+src/
+├── config/
+│   └── gtm.js           # Configuração centralizada e helpers
+└── hooks/
+    └── useGTM.js        # Hooks React para tracking automático
+```
+
+#### 3. Configuração Centralizada
+**Arquivo:** `src/config/gtm.js`
+```javascript
+export const GTM_ID = 'GTM-XXXXXXX' // Container ID
+
+export const gtmTrack = {
+  // Evento genérico
+  customEvent: (eventName, eventData = {}) => {
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: eventName,
+        ...eventData,
+      })
+    }
+  },
+
+  // CTAs
+  ctaClick: (ctaName, ctaText = '') => {
+    gtmTrack.customEvent('cta_click', {
+      cta_name: ctaName,
+      cta_text: ctaText,
+    })
+  },
+
+  // WhatsApp
+  whatsappClick: (location) => {
+    gtmTrack.customEvent('whatsapp_click', {
+      whatsapp_location: location,
+    })
+  },
+
+  // Seções
+  sectionView: (sectionId) => {
+    gtmTrack.customEvent('section_view', {
+      section_id: sectionId,
+    })
+  },
+
+  // Depoimentos
+  testimonialClick: (clientName) => {
+    gtmTrack.customEvent('testimonial_click', {
+      client_name: clientName,
+    })
+  },
+
+  // Imagens
+  imageClick: (imageAlt) => {
+    gtmTrack.customEvent('image_click', {
+      image_alt: imageAlt,
+    })
+  },
+}
+```
+
+**Decisão**: Centralizar em arquivo de configuração porque:
+- Facilita manutenção (um único ponto de atualização)
+- Permite validação antes de enviar ao dataLayer
+- Reutilizável em todos os componentes
+- Fácil adicionar novos tipos de eventos
+
+#### 4. Hook React para Tracking Automático
+**Arquivo:** `src/hooks/useGTM.js`
+```javascript
+export const useGTM = () => {
+  useEffect(() => {
+    // Page View inicial
+    gtmTrack.customEvent('page_view', {
+      page_path: window.location.pathname,
+      page_title: document.title,
+    })
+
+    // Scroll Depth
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrolled = window.scrollY
+      const scrollPercentage = (scrolled / scrollHeight) * 100
+
+      // Marcar percentuais (25%, 50%, 75%, 90%)
+      if (scrollPercentage > 25 && !window.dataLayer.scrolled25) {
+        gtmTrack.customEvent('scroll_depth', { scroll_percentage: '25%' })
+        window.dataLayer.scrolled25 = true
+      }
+      // ... outros percentuais
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+}
+
+// Hook para tracking de seções
+export const useSectionView = (sectionId) => {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !entry.target.hasBeenViewed) {
+          gtmTrack.sectionView(sectionId)
+          entry.target.hasBeenViewed = true
+        }
+      },
+      { threshold: 0.5 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [sectionId])
+
+  return sectionRef
+}
+```
+
+**Decisão**: Usar hooks React porque:
+- Reutilizável em qualquer componente
+- Integração natural com ciclo de vida do React
+- Intersection Observer para seções (performance)
+- Scroll tracking com flags para evitar duplicatas
+
+#### 5. Scripts no HTML
+**Arquivo:** `index.html`
+```html
+<head>
+  <!-- Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+</body>
+```
+
+**Decisão**: Script no `<head>` e noscript no `<body>` porque:
+- Script no head carrega antes do conteúdo (melhor tracking)
+- Noscript garante tracking mesmo sem JavaScript
+- Async previne bloqueio de renderização
+
+#### 6. Integração nos Componentes
+**Exemplo:** `src/components/Hero.jsx`
+```javascript
+import { gtmTrack } from '../config/gtm'
+
+const handleCTAClick = () => {
+  gtmTrack.ctaClick('Hero_CTA_Principal')
+}
+```
+
+**Decisão**: Tracking nos handlers porque:
+- Captura interação real do usuário
+- Contexto específico (qual CTA, qual seção)
+- Não interfere na funcionalidade
+
+### Eventos Implementados
+
+#### Eventos Automáticos
+1. **Page View**: Visualização inicial da página
+2. **Scroll Depth**: 25%, 50%, 75%, 90% de scroll
+3. **Section View**: Quando seções entram na viewport (via Intersection Observer)
+
+#### Eventos Manuais
+1. **CTA Click**: Cliques em botões de ação
+2. **WhatsApp Click**: Cliques no WhatsApp (botão flutuante ou CTAs)
+3. **Testimonial Click**: Cliques em vídeos de depoimentos
+4. **Image Click**: Cliques em imagens que abrem modal
+
+### Variáveis do DataLayer
+
+**Evento:** `cta_click`
+- `cta_name`: Identificador do CTA (ex: "Hero_CTA_Principal")
+- `cta_text`: Texto do botão (opcional)
+
+**Evento:** `whatsapp_click`
+- `whatsapp_location`: Origem do clique (ex: "hero", "footer", "cta_final")
+
+**Evento:** `section_view`
+- `section_id`: ID da seção (ex: "hero", "como-funciona")
+
+**Evento:** `scroll_depth`
+- `scroll_percentage`: Percentual alcançado ("25%", "50%", etc.)
+
+**Evento:** `testimonial_click`
+- `client_name`: Nome da cliente do depoimento
+
+**Evento:** `image_click`
+- `image_alt`: Texto alternativo da imagem
+
+### Configuração no GTM
+
+#### 1. Criar Tags
+- Google Analytics 4 (GA4): Configurar evento `cta_click`
+- Facebook Pixel (opcional): Evento `CompleteRegistration` para WhatsApp clicks
+
+#### 2. Criar Triggers
+- **Page View**: Trigger "Page View" para todas as páginas
+- **Scroll Depth**: Trigger "Scroll Depth" (25%, 50%, 75%, 90%)
+- **Custom Events**: Triggers baseados em `event === 'cta_click'`
+
+#### 3. Criar Variáveis
+- `{{cta_name}}`: Variável de Data Layer
+- `{{whatsapp_location}}`: Variável de Data Layer
+- `{{section_id}}`: Variável de Data Layer
+
+### Funcionalidades Implementadas
+
+✅ **Scripts GTM configurados** no `<head>` e `<body>`  
+✅ **Arquivo de configuração centralizado** (`src/config/gtm.js`)  
+✅ **Hooks React para tracking automático** (`useGTM`, `useSectionView`)  
+✅ **Helpers para eventos manuais** (CTA, WhatsApp, etc.)  
+✅ **Page view automático** no carregamento  
+✅ **Scroll depth tracking** (4 marcos: 25%, 50%, 75%, 90%)  
+✅ **Section view tracking** via Intersection Observer  
+✅ **Integração nos componentes** (Hero CTA como exemplo)  
+✅ **Documentação completa** (`GTM_SETUP.md`)  
+
+### Lições Aprendidas
+
+1. **Centralização é fundamental**: Arquivo de configuração facilita manutenção
+2. **Hooks React são poderosos**: Reutilização e integração natural
+3. **Intersection Observer**: Melhor que scroll events para seções (performance)
+4. **Flags para evitar duplicatas**: Importante em scroll depth tracking
+5. **Scripts no head**: Garante tracking mesmo se usuário sair rápido
+6. **Noscript fallback**: Garante tracking básico sem JavaScript
+7. **Documentação é essencial**: `GTM_SETUP.md` facilita configuração futura
+8. **Teste no Preview Mode**: GTM Preview é essencial para validar eventos
+
+---
+
+### Implementação: SEO Avançado com Structured Data (Schema.org)
+**Data:** Otimização completa de SEO  
+**Objetivo:** Melhorar indexação, rich snippets e compartilhamento social
+
+**Pensamento e Decisões:**
+
+#### 1. Por que Structured Data (Schema.org)?
+- **Rich Snippets**: Aparecer com informações extras no Google
+- **Local SEO**: LocalBusiness melhora buscas locais
+- **Knowledge Graph**: Ajuda Google entender melhor o negócio
+- **Social Sharing**: Open Graph e Twitter Cards melhoram previews
+- **Credibilidade**: Informações estruturadas aumentam confiança
+
+#### 2. Meta Tags Implementadas
+
+##### Meta Tags Básicas
+```html
+<title>Leli Morgado Massoterapeuta | Alívio de Dores Crônicas em 1 Sessão</title>
+<meta name="description" content="Tratamento personalizado de massoterapia e fisioterapia para alívio de dores nas costas, pescoço e lombar. Atendimento humanizado com acupuntura, auriculoterapia e aromaterapia. Agende sua sessão!" />
+<meta name="keywords" content="massoterapia, fisioterapia, dores crônicas, massagem terapêutica, acupuntura, auriculoterapia, aromaterapia, alívio de dores, dor nas costas, dor no pescoço, dor lombar, massoterapeuta São Paulo, tratamento de dores, massagem relaxante, terapia integrativa, bem-estar, saúde, reabilitação física" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<link rel="canonical" href="https://lelimassoterapeuta.com.br/" />
+```
+
+**Decisão**: Keywords expandidas porque:
+- Cobre variações de busca ("dor nas costas" vs "dores nas costas")
+- Inclui localização ("massoterapeuta São Paulo")
+- Combina termos técnicos e populares
+
+##### Open Graph (Facebook/LinkedIn)
+```html
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://lelimassoterapeuta.com.br/" />
+<meta property="og:title" content="Leli Morgado Massoterapeuta | Alívio de Dores Crônicas em 1 Sessão" />
+<meta property="og:description" content="Tratamento personalizado de massoterapia e fisioterapia para alívio de dores nas costas, pescoço e lombar. Atendimento humanizado com terapias complementares. Agende sua sessão!" />
+<meta property="og:image" content="https://lelimassoterapeuta.com.br/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Leli Morgado - Massoterapeuta e Fisioterapeuta especializada em tratamento de dores crônicas" />
+<meta property="og:site_name" content="Leli Morgado Massoterapeuta" />
+<meta property="og:locale" content="pt_BR" />
+```
+
+**Decisão**: Image dimensions e alt porque:
+- Facebook exige dimensões (1200x630) para preview correto
+- Alt text melhora acessibilidade e SEO
+- Locale específico (pt_BR) para melhor indexação regional
+
+##### Twitter Cards
+```html
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="https://lelimassoterapeuta.com.br/" />
+<meta name="twitter:title" content="Leli Morgado Massoterapeuta | Alívio de Dores Crônicas em 1 Sessão" />
+<meta name="twitter:description" content="Tratamento personalizado de massoterapia e fisioterapia para alívio de dores nas costas, pescoço e lombar." />
+<meta name="twitter:image" content="https://lelimassoterapeuta.com.br/og-image.jpg" />
+<meta name="twitter:image:alt" content="Leli Morgado - Massoterapeuta e Fisioterapeuta especializada em tratamento de dores crônicas" />
+```
+
+**Decisão**: `summary_large_image` porque:
+- Melhor visual impact em redes sociais
+- Mais espaço para preview da imagem
+- Aumenta taxa de cliques
+
+#### 3. Structured Data (JSON-LD)
+
+##### LocalBusiness Schema
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Leli Morgado Massoterapeuta",
+  "description": "Tratamento personalizado de massoterapia e fisioterapia...",
+  "url": "https://lelimassoterapeuta.com.br",
+  "telephone": "+55-11-99999-9999",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "-23.5505",
+    "longitude": "-46.6333"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "service": [
+    {
+      "@type": "Service",
+      "serviceType": "Massoterapia",
+      "description": "Massagem terapêutica para alívio de dores crônicas"
+    },
+    {
+      "@type": "Service",
+      "serviceType": "Fisioterapia",
+      "description": "Tratamento fisioterapêutico personalizado"
+    }
+  ]
+}
+```
+
+**Decisão**: LocalBusiness porque:
+- Melhora SEO local (buscas como "massoterapeuta perto de mim")
+- Mostra informações no Google Maps
+- Rich snippets com telefone, endereço, horários
+
+##### Person Schema
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Leli Morgado",
+  "jobTitle": "Massoterapeuta e Fisioterapeuta",
+  "description": "Profissional especializada em massoterapia e fisioterapia...",
+  "url": "https://lelimassoterapeuta.com.br",
+  "image": "https://lelimassoterapeuta.com.br/fotoleli2.jpg",
+  "sameAs": [
+    "https://www.instagram.com/lelimorgado",
+    "https://www.facebook.com/lelimorgado"
+  ],
+  "knowsAbout": [
+    "Massoterapia",
+    "Fisioterapia",
+    "Acupuntura",
+    "Auriculoterapia",
+    "Aromaterapia",
+    "Tratamento de Dores Crônicas"
+  ]
+}
+```
+
+**Decisão**: Person Schema porque:
+- Conecta profissional ao negócio
+- Melhora busca por nome da profissional
+- Links com redes sociais aumentam autoridade
+
+##### WebSite Schema
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Leli Morgado Massoterapeuta",
+  "url": "https://lelimassoterapeuta.com.br",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://lelimassoterapeuta.com.br/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+```
+
+**Decisão**: WebSite Schema porque:
+- Permite busca no Google (se implementar busca no site)
+- Melhora indexação geral do site
+
+### Keywords Estratégicas
+
+**Principais:**
+- massoterapia
+- fisioterapia
+- dores crônicas
+- alívio de dores
+- massagem terapêutica
+
+**Específicas:**
+- dor nas costas
+- dor no pescoço
+- dor lombar
+- massoterapeuta São Paulo
+
+**Complementares:**
+- acupuntura
+- auriculoterapia
+- aromaterapia
+- terapia integrativa
+- bem-estar
+- saúde
+- reabilitação física
+
+**Decisão**: Combinação estratégica porque:
+- Cobre busca por sintoma específico ("dor nas costas")
+- Inclui localização ("São Paulo")
+- Combina técnicas ("massoterapia + fisioterapia")
+- Long-tail keywords ("tratamento de dores crônicas")
+
+### Otimizações Adicionais
+
+#### Robots Meta
+```html
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+```
+
+**Decisão**: Configuração completa porque:
+- `index, follow`: Permite indexação e seguimento de links
+- `max-image-preview:large`: Google pode mostrar preview grande de imagens
+- `max-snippet:-1`: Google pode mostrar snippet completo do texto
+- `max-video-preview:-1`: Google pode mostrar preview completo de vídeos
+
+#### Canonical URL
+```html
+<link rel="canonical" href="https://lelimassoterapeuta.com.br/" />
+```
+
+**Decisão**: Canonical porque:
+- Previne conteúdo duplicado
+- Concentra autoridade em uma URL
+- Especialmente importante se tiver múltiplas versões (www, não-www)
+
+#### Geo Tags
+```html
+<meta name="geo.region" content="BR-SP" />
+<meta name="geo.placename" content="São Paulo" />
+```
+
+**Decisão**: Geo tags porque:
+- Melhora SEO local
+- Ajuda buscadores entender localização
+- Especialmente útil para negócios locais
+
+### Ferramentas de Validação
+
+1. **Google Rich Results Test**: https://search.google.com/test/rich-results
+   - Valida Schema.org
+   - Mostra como aparecerá no Google
+
+2. **Facebook Sharing Debugger**: https://developers.facebook.com/tools/debug/
+   - Valida Open Graph
+   - Mostra preview do compartilhamento
+
+3. **Twitter Card Validator**: https://cards-dev.twitter.com/validator
+   - Valida Twitter Cards
+   - Mostra preview do tweet
+
+4. **Schema Markup Validator**: https://validator.schema.org/
+   - Valida JSON-LD
+   - Verifica sintaxe e estrutura
+
+### Funcionalidades Implementadas
+
+✅ **Meta tags básicas otimizadas** (title, description, keywords, robots)  
+✅ **Open Graph completo** (Facebook/LinkedIn)  
+✅ **Twitter Cards configurado** (summary_large_image)  
+✅ **Structured Data (JSON-LD)**:
+  - LocalBusiness (negócio local)
+  - Person (profissional)
+  - WebSite (site)
+✅ **Keywords estratégicas** (principais, específicas, complementares)  
+✅ **Canonical URL** configurado  
+✅ **Geo tags** para SEO local  
+✅ **PWA meta tags** (theme color, apple mobile web app)  
+✅ **Favicons configurados** (PNG, Apple touch icon)  
+✅ **Documentação completa** (`SEO_OPTIMIZATION.md`)  
+
+### Lições Aprendidas
+
+1. **Structured Data é poderoso**: Rich snippets aumentam CTR significativamente
+2. **LocalBusiness para negócios locais**: Essencial para SEO local
+3. **Open Graph e Twitter Cards**: Melhoram compartilhamento social drasticamente
+4. **Keywords balanceadas**: Combinar termos populares e técnicos
+5. **Image dimensions são obrigatórias**: Facebook requer 1200x630 para preview correto
+6. **Validação é essencial**: Sempre testar com ferramentas oficiais
+7. **Canonical previne problemas**: Especialmente importante com múltiplas URLs
+8. **Person Schema conecta profissional**: Aumenta autoridade e busca por nome
+9. **Documentação facilita manutenção**: `SEO_OPTIMIZATION.md` lista todos os ajustes necessários
+10. **Geo tags ajudam SEO local**: Importante para negócios físicos
+
+### Checklist de Ajustes Necessários
+
+- [ ] Substituir telefone no Schema LocalBusiness
+- [ ] Ajustar endereço e coordenadas geográficas
+- [ ] Configurar horários de funcionamento reais
+- [ ] Adicionar URLs reais de redes sociais no Person Schema
+- [ ] Criar e fazer upload da imagem og-image.jpg (1200x630)
+- [ ] Confirmar que favicon existe no /public/
+- [ ] Testar compartilhamento no Facebook (Open Graph Debugger)
+- [ ] Testar compartilhamento no Twitter (Card Validator)
+- [ ] Validar Schema.org no Google Rich Results Test
+- [ ] Verificar canonical URL está correto
+- [ ] Confirmar que todas as imagens têm alt text
+
+---
+
 ## Status do Projeto
 
 ✅ **Landing Page Completa e Finalizada**  
@@ -1811,9 +2365,11 @@ const whatsappUrl = getWhatsAppUrl('hero')
 ✅ **Gradientes, sombras e glassmorphism aplicados**  
 ✅ **CTAs premium com animações contínuas em todas as seções**  
 ✅ **Configuração centralizada do WhatsApp implementada**  
-✅ **SEO básico e meta tags implementados**  
-✅ **Acessibilidade básica implementada (ARIA labels, navegação por teclado)**  
+✅ **SEO avançado implementado** (Meta tags completas, Structured Data/Schema.org, Open Graph, Twitter Cards)  
+✅ **Google Tag Manager integrado** (Tracking de eventos, scroll depth, section views, CTAs)  
+✅ **Acessibilidade básica implementada** (ARIA labels, navegação por teclado)  
 ⏳ **Configurar número de WhatsApp real** em `src/config/whatsapp.js` (atualmente placeholder: 5511999999999)  
+⏳ **Configurar GTM Container ID real** em `index.html` e `src/config/gtm.js` (substituir GTM-XXXXXXX)  
 ⏳ **Substituir vídeos de depoimentos** por vídeos reais (atualmente placeholders: video1.mp4, video2.mp4, video3.mp4)  
 
 ## Próximos Passos
@@ -1852,7 +2408,14 @@ A landing page está **100% completa e funcional**. Todas as funcionalidades pri
 - [ ] Verificar acessibilidade (Lighthouse)
 
 #### Após o Deploy
-- [ ] Configurar Google Analytics / Tag Manager
+- [ ] Configurar GTM Container ID real (substituir GTM-XXXXXXX)
+- [ ] Configurar tags no Google Tag Manager (GA4, eventos customizados)
+- [ ] Configurar triggers no GTM para todos os eventos
+- [ ] Testar eventos no modo Preview do GTM
+- [ ] Ajustar dados do Schema.org (telefone, endereço, horários, redes sociais)
+- [ ] Criar e fazer upload da imagem og-image.jpg (1200x630)
+- [ ] Validar SEO com Google Rich Results Test
+- [ ] Testar compartilhamento social (Facebook Sharing Debugger, Twitter Card Validator)
 - [ ] Monitorar conversões e cliques no WhatsApp
 - [ ] Coletar feedback dos usuários
 - [ ] Ajustes baseados em dados reais
@@ -1968,6 +2531,74 @@ A landing page está **100% completa e funcional**. Todas as funcionalidades pri
 4. **Configuração Centralizada**: Um único ponto de atualização previne inconsistências
 5. **Estrutura de Dados**: Estruturas de dados bem definidas facilitam manutenção
 
+### 📊 Aprendizados de Google Tag Manager (GTM)
+
+1. **Centralização de Configuração**: Arquivo `src/config/gtm.js` centraliza todos os eventos e facilita manutenção
+2. **Hooks React para Tracking**: `useGTM()` e `useSectionView()` reutilizáveis em qualquer componente
+3. **Intersection Observer para Seções**: Melhor performance que scroll events para rastrear visualizações de seções
+4. **Flags para Evitar Duplicatas**: Usar flags (`window.dataLayer.scrolled25`) previne eventos duplicados em scroll depth
+5. **Scripts no Head**: GTM script no `<head>` garante tracking mesmo se usuário sair rapidamente
+6. **Noscript Fallback**: Iframe noscript no `<body>` garante tracking básico sem JavaScript
+7. **DataLayer Estruturado**: Eventos com estrutura consistente facilitam configuração no GTM
+8. **Tracking nos Handlers**: Integrar tracking nos event handlers captura interação real do usuário
+9. **Modo Preview é Essencial**: Sempre testar com GTM Preview Mode antes de publicar
+10. **Documentação de Eventos**: Documentar todos os eventos e variáveis facilita configuração no GTM
+
+**Estrutura Recomendada:**
+```
+src/
+├── config/
+│   └── gtm.js           # Configuração e helpers
+└── hooks/
+    └── useGTM.js        # Hooks React para tracking automático
+```
+
+**Eventos Essenciais:**
+- Page View (automático)
+- Scroll Depth (25%, 50%, 75%, 90%)
+- Section View (via Intersection Observer)
+- CTA Click (manual nos handlers)
+- WhatsApp Click (manual nos handlers)
+- Testimonial Click (manual nos handlers)
+- Image Click (manual nos handlers)
+
+### 🔍 Aprendizados de SEO Avançado
+
+1. **Structured Data (Schema.org) é Poderoso**: Rich snippets aumentam CTR significativamente no Google
+2. **LocalBusiness para Negócios Locais**: Essencial para SEO local e aparecer no Google Maps
+3. **Person Schema Conecta Profissional**: Aumenta autoridade e melhora busca por nome da pessoa
+4. **Open Graph e Twitter Cards**: Melhoram drasticamente compartilhamento em redes sociais
+5. **Image Dimensions são Obrigatórias**: Facebook requer 1200x630 para preview correto de imagens
+6. **Keywords Balanceadas**: Combinar termos populares ("dor nas costas") com técnicos ("massoterapia")
+7. **Canonical URL Previne Problemas**: Especialmente importante com múltiplas versões (www, não-www)
+8. **Geo Tags Ajudam SEO Local**: Importante para negócios físicos e buscas locais
+9. **Robots Meta Completo**: `max-image-preview:large` e `max-snippet:-1` permitem preview completo
+10. **Validação é Essencial**: Sempre testar com ferramentas oficiais (Rich Results Test, Sharing Debugger)
+11. **Favicons Configurados**: Favicon e Apple touch icon melhoram experiência mobile
+12. **Alt Text em Todas as Imagens**: Essencial para acessibilidade e SEO de imagens
+
+**Schema.org Recomendado:**
+- **LocalBusiness**: Para negócios locais (endereço, telefone, horários)
+- **Person**: Para profissionais (nome, foto, redes sociais)
+- **WebSite**: Para sites (URL, busca)
+- **Service**: Para serviços oferecidos
+
+**Meta Tags Essenciais:**
+- Title (60-70 caracteres)
+- Description (150-160 caracteres)
+- Keywords (expandidas e relevantes)
+- Robots (index, follow, previews)
+- Canonical URL
+- Open Graph (Facebook/LinkedIn)
+- Twitter Cards
+- Geo tags (para negócios locais)
+
+**Ferramentas de Validação:**
+- Google Rich Results Test (Schema.org)
+- Facebook Sharing Debugger (Open Graph)
+- Twitter Card Validator (Twitter Cards)
+- Schema Markup Validator (JSON-LD)
+
 ### 🎓 Lições Finais
 
 1. **Testar em Produção**: Build de produção pode funcionar mesmo quando dev tem problemas
@@ -1986,7 +2617,8 @@ A landing page está **100% completa e funcional**. Todas as funcionalidades pri
 ✅ **Experiência Mobile Otimizada**  
 ✅ **Animações Premium Implementadas**  
 ✅ **Acessibilidade Básica Garantida**  
-✅ **SEO Básico Configurado**  
+✅ **SEO Avançado Configurado** (Meta tags, Structured Data, Open Graph, Twitter Cards)
+✅ **Google Tag Manager Integrado** (Tracking de eventos, scroll depth, section views)  
 ✅ **Performance Otimizada**  
 ✅ **Código Limpo e Organizado**  
 ✅ **Documentação Completa**  

@@ -1,7 +1,13 @@
 import { getWhatsAppUrl } from '../config/whatsapp'
+import { gtmTrack } from '../config/gtm'
 
 function Hero() {
   const whatsappUrl = getWhatsAppUrl('hero')
+
+  const handleCTAClick = () => {
+    gtmTrack.ctaClick('Agendar Sessão', 'Hero')
+    gtmTrack.whatsappClick('hero')
+  }
 
   return (
     <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50/40 via-white to-green-50/20 md:bg-gradient-to-br md:from-emerald-50/40 md:via-white md:to-green-50/20 pt-20 md:pt-28 lg:pt-32 xl:pt-36 overflow-hidden">
@@ -44,6 +50,7 @@ function Hero() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={handleCTAClick}
               className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 rounded-3xl font-light tracking-wider text-base shadow-[0_0_40px_rgba(34,197,94,0.6)] hover:shadow-[0_0_60px_rgba(34,197,94,0.8)] hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/30 animate-pulse-slow"
             >
               {/* Shimmer effect contínuo */}
@@ -94,6 +101,7 @@ function Hero() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleCTAClick}
                 className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-light tracking-wider text-base md:text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 relative overflow-hidden"
               >
                 <svg
