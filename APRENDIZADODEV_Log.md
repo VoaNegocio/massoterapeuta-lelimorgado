@@ -2508,6 +2508,122 @@ bg-gradient-to-r from-green-500 via-green-600 to-emerald-600
 
 ---
 
+### Implementação: Preview de Compartilhamento Social (Open Graph e Twitter Cards)
+**Data:** Configuração de imagem de preview para compartilhamento  
+**Objetivo:** Configurar a foto da profissional como preview quando o link for compartilhado no WhatsApp, Facebook, LinkedIn e outras redes sociais
+
+**Pensamento e Decisões:**
+
+#### 1. Por que Configurar Preview de Compartilhamento?
+- **Primeira impressão visual**: A imagem é a primeira coisa que o usuário vê ao compartilhar o link
+- **Aumenta engajamento**: Links com preview têm maior taxa de clique
+- **Profissionalismo**: Mostra a foto da profissional aumenta confiança e conexão
+- **Diferencial**: Muitos sites não configuram corretamente, perdendo oportunidades de conversão
+
+#### 2. Meta Tags Necessárias
+
+**Open Graph (Facebook/WhatsApp/LinkedIn):**
+```html
+<meta property="og:image" content="https://lelimassoterapeuta.com.br/fotoleli2.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Leli Morgado - Massoterapeuta e Fisioterapeuta especializada em tratamento de dores crônicas" />
+```
+
+**Twitter Cards:**
+```html
+<meta name="twitter:image" content="https://lelimassoterapeuta.com.br/fotoleli2.jpg" />
+<meta name="twitter:image:alt" content="Leli Morgado - Massoterapeuta e Fisioterapeuta especializada em tratamento de dores crônicas" />
+```
+
+**Decisão**: Usar a mesma imagem (`fotoleli2.jpg`) para ambos porque:
+- Consistência visual entre plataformas
+- Foto da profissional cria conexão emocional
+- Reutilização de asset já existente (sem necessidade de criar nova imagem)
+
+#### 3. URL Completa vs Relativa
+**Decisão**: Usar URL completa (`https://lelimassoterapeuta.com.br/fotoleli2.jpg`) porque:
+- Redes sociais requerem URL absoluta (não funcionam com caminhos relativos)
+- Garante que a imagem seja encontrada corretamente
+- Necessário para funcionar em qualquer contexto de compartilhamento
+
+#### 4. Dimensões Recomendadas
+**Open Graph (Facebook/WhatsApp):**
+- **Recomendado**: 1200x630px (proporção 1.91:1)
+- **Mínimo**: 600x315px
+- **Máximo**: 1200x1200px
+
+**Twitter Cards:**
+- **summary_large_image**: 1200x675px (proporção 16:9)
+- **summary**: 120x120px
+
+**Nota**: Se a foto não estiver nessas proporções, pode aparecer cortada ou com bordas. Para melhor resultado, criar versão otimizada da foto.
+
+#### 5. Alt Text para Acessibilidade
+**Decisão**: Adicionar `og:image:alt` e `twitter:image:alt` porque:
+- Melhora acessibilidade para leitores de tela
+- SEO de imagens
+- Boa prática de desenvolvimento web
+
+### Funcionalidades Implementadas
+
+✅ **Open Graph configurado** (`og:image`, `og:image:width`, `og:image:height`, `og:image:alt`)  
+✅ **Twitter Cards configurado** (`twitter:image`, `twitter:image:alt`)  
+✅ **Foto da profissional como preview** (`fotoleli2.jpg`)  
+✅ **URL completa configurada** (funciona em todas as redes sociais)  
+✅ **Alt text para acessibilidade** configurado  
+
+### Como Funciona
+
+#### Quando alguém compartilha o link:
+1. **WhatsApp/Facebook/LinkedIn**: Buscam a meta tag `og:image`
+2. **Twitter**: Busca a meta tag `twitter:image`
+3. **Navegador**: Renderiza preview com título, descrição e imagem
+4. **Cache**: Redes sociais fazem cache da imagem (pode precisar limpar cache)
+
+### Testando o Preview
+
+#### 1. Facebook/WhatsApp:
+- **Ferramenta**: [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+- **Como usar**: Cole a URL e clique em "Debug"
+- **Importante**: Use "Scrape Again" para limpar cache se a imagem não atualizar
+
+#### 2. Twitter:
+- **Ferramenta**: [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+- **Como usar**: Cole a URL e clique em "Preview Card"
+- **Nota**: Requer login no Twitter
+
+#### 3. LinkedIn:
+- **Ferramenta**: [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/)
+- **Como usar**: Cole a URL e clique em "Inspect"
+- **Importante**: Limpar cache pode levar alguns dias no LinkedIn
+
+### Lições Aprendidas
+
+1. **URL Completa é Obrigatória**: Redes sociais não aceitam caminhos relativos para imagens
+2. **Cache é Permanente**: Após primeira vez, redes sociais fazem cache da imagem (pode levar dias para atualizar)
+3. **Dimensões Importam**: Imagens com proporções diferentes podem aparecer cortadas
+4. **Foto da Profissional Funciona Melhor**: Cria conexão emocional e aumenta confiança
+5. **Alt Text é Essencial**: Melhora acessibilidade e SEO
+6. **Teste em Múltiplas Plataformas**: Cada rede social tem requisitos ligeiramente diferentes
+7. **Ferramentas de Debug São Essenciais**: Sempre testar antes de considerar completo
+8. **Consistência Visual**: Usar mesma imagem em todas as plataformas mantém branding consistente
+
+### Melhorias Futuras Possíveis
+
+- [ ] Criar versão otimizada da foto (1200x630px) especificamente para Open Graph
+- [ ] Adicionar diferentes imagens para diferentes seções (se site tiver múltiplas páginas)
+- [ ] Implementar fallback para caso imagem não carregue
+- [ ] Adicionar versões diferentes para Twitter (se necessário formato diferente)
+
+### Status
+✅ **Open Graph configurado**  
+✅ **Twitter Cards configurado**  
+✅ **Foto da profissional como preview**  
+✅ **Pronto para compartilhamento social**  
+
+---
+
 ## Status do Projeto
 
 ✅ **Landing Page Completa e Finalizada**  
@@ -2765,6 +2881,10 @@ src/
 10. **Validação é Essencial**: Sempre testar com ferramentas oficiais (Rich Results Test, Sharing Debugger)
 11. **Favicons Configurados**: Favicon e Apple touch icon melhoram experiência mobile
 12. **Alt Text em Todas as Imagens**: Essencial para acessibilidade e SEO de imagens
+13. **URL Completa para Preview**: Redes sociais requerem URL absoluta (não relativa) para `og:image` e `twitter:image`
+14. **Cache de Preview é Permanente**: Redes sociais fazem cache da imagem - pode levar dias para atualizar após mudança
+15. **Foto da Profissional Funciona Melhor**: Usar foto real ao invés de logo cria conexão emocional e aumenta engajamento
+16. **Ferramentas de Debug Essenciais**: Sempre testar preview com Facebook Sharing Debugger, Twitter Card Validator e LinkedIn Post Inspector
 
 **Schema.org Recomendado:**
 - **LocalBusiness**: Para negócios locais (endereço, telefone, horários)
