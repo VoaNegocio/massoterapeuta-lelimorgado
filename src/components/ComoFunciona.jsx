@@ -232,25 +232,26 @@ function ComoFunciona() {
           </div>
         )}
 
-        {/* CTA */}
+        {/* CTA - Design 3D Premium */}
               <div className="text-center">
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-3 md:gap-4 lg:gap-5 xl:gap-6 2xl:gap-8 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 md:px-12 md:py-6 lg:px-16 lg:py-8 xl:px-20 xl:py-10 2xl:px-24 2xl:py-12 rounded-3xl font-light tracking-wider text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl shadow-[0_0_40px_rgba(34,197,94,0.6)] hover:shadow-[0_0_60px_rgba(34,197,94,0.8)] hover:scale-110 transition-all duration-500 relative overflow-hidden border-2 border-white/30 animate-pulse-slow"
+                  className="group inline-flex items-center gap-3 md:gap-4 lg:gap-5 xl:gap-6 2xl:gap-8 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 text-white px-8 py-4 md:px-12 md:py-6 lg:px-16 lg:py-8 xl:px-20 xl:py-10 2xl:px-24 2xl:py-12 rounded-3xl font-light tracking-wider text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl shadow-[0_8px_32px_rgba(34,197,94,0.5),0_4px_16px_rgba(34,197,94,0.4),inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(0,0,0,0.2)] hover:shadow-[0_12px_48px_rgba(34,197,94,0.6),0_6px_24px_rgba(34,197,94,0.5),inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.3)] hover:scale-110 hover:-translate-y-0.5 active:scale-[0.96] active:translate-y-[2px] active:shadow-[0_4px_16px_rgba(34,197,94,0.4),inset_0_1px_0_rgba(255,255,255,0.2),inset_0_2px_4px_rgba(0,0,0,0.3)] transition-all duration-200 ease-out relative overflow-hidden border-t-2 border-white/40 border-b border-white/10 animate-pulse-slow hover:[transform:perspective(1000px)_rotateX(-2deg)]"
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
                   {/* Shimmer effect contínuo */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer pointer-events-none"></span>
                   
                   {/* Glow effect contínuo e intenso */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-green-300/0 via-green-300/70 to-green-300/0 opacity-60 animate-pulse blur-2xl"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-green-300/0 via-green-300/70 to-green-300/0 opacity-60 animate-pulse blur-2xl pointer-events-none"></span>
                   
                   {/* Glow effect extra no hover */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-emerald-300/0 via-emerald-300/80 to-emerald-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-emerald-300/0 via-emerald-300/80 to-emerald-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none"></span>
                   
                   {/* Brilho interno */}
-                  <span className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent"></span>
+                  <span className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></span>
                   
                   <svg
                     className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:w-10 xl:h-10 2xl:w-12 2xl:h-12 relative z-10 drop-shadow-lg animate-bounce-slow"
