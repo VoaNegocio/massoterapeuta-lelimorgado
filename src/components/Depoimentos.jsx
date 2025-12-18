@@ -19,7 +19,7 @@ function Depoimentos() {
       avaliacao: 5,
     },
     {
-      nome: 'Vanessa Fradique',
+      nome: 'Dra Camila Exel',
       video: '/videos/video3.mp4',
       foto: '/maria-isabel-img1.jpg', // Foto da cliente como preview
       avaliacao: 5,
@@ -70,9 +70,9 @@ function Depoimentos() {
         <div>
           {/* Mobile: Carrossel Horizontal */}
           <div className="md:hidden relative">
-            <div 
+            <div
               id="depoimentos-carousel"
-              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-3 px-3" 
+              className="overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-3 px-3"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               onScroll={handleScroll}
             >
@@ -95,7 +95,7 @@ function Depoimentos() {
                   >
                     {/* Gradiente premium no hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-green-50/0 via-emerald-50/0 to-green-50/0 group-hover:from-green-50/40 group-hover:via-emerald-50/30 group-hover:to-green-50/40 transition-all duration-500 rounded-3xl z-10 pointer-events-none"></div>
-                    
+
                     <div className="relative z-20 p-4">
                       {/* Preview da Cliente com Overlay e Play Button */}
                       <div className="relative w-full mx-auto rounded-2xl overflow-hidden mb-4 bg-neutral-900 shadow-xl" style={{ aspectRatio: '9/16', maxWidth: '260px' }}>
@@ -106,10 +106,10 @@ function Depoimentos() {
                           className="w-full h-full object-cover"
                           loading="lazy"
                         />
-                        
+
                         {/* Overlay escuro para legibilidade */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
-                        
+
                         {/* Ícone de Play Premium */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-white/30 backdrop-blur-2xl rounded-full p-4 md:p-5 shadow-xl transform group-hover:scale-110 group-hover:bg-white/60 group-hover:shadow-2xl transition-all duration-300 border border-white/20">
@@ -146,7 +146,7 @@ function Depoimentos() {
                 ))}
               </div>
             </div>
-            
+
             {/* Indicadores Mobile */}
             <div className="flex justify-center gap-2 mt-6">
               {depoimentos.map((_, index) => (
@@ -157,11 +157,10 @@ function Depoimentos() {
                     const card = container?.querySelector(`[data-index="${index}"]`)
                     card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
                   }}
-                  className={`h-2 rounded-full transition-all ${
-                    index === currentIndex
+                  className={`h-2 rounded-full transition-all ${index === currentIndex
                       ? 'bg-green-600 w-8'
                       : 'bg-neutral-300 w-2'
-                  }`}
+                    }`}
                   aria-label={`Ir para depoimento ${index + 1}`}
                 />
               ))}
@@ -187,7 +186,7 @@ function Depoimentos() {
               >
                 {/* Gradiente premium no hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-green-50/0 via-emerald-50/0 to-green-50/0 group-hover:from-green-50/40 group-hover:via-emerald-50/30 group-hover:to-green-50/40 transition-all duration-500"></div>
-                
+
                 <div className="relative z-10">
                   {/* Preview da Cliente com Overlay e Play Button */}
                   <div className="relative w-full mx-auto rounded-2xl overflow-hidden mb-6 lg:mb-8 bg-neutral-900 shadow-xl" style={{ aspectRatio: '9/16', maxWidth: '320px' }}>
@@ -198,10 +197,10 @@ function Depoimentos() {
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    
+
                     {/* Overlay escuro para legibilidade */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
-                    
+
                     {/* Ícone de Play Premium */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="bg-white/30 backdrop-blur-2xl rounded-full p-5 md:p-6 shadow-xl transform group-hover:scale-110 group-hover:bg-white/60 group-hover:shadow-2xl transition-all duration-300 border border-white/20">
@@ -250,9 +249,9 @@ function Depoimentos() {
           >
             {/* Overlay com feedback visual no hover */}
             <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors duration-300"></div>
-            
+
             {/* Container do modal */}
-            <div 
+            <div
               className="relative max-w-4xl w-full cursor-default animate-fade-in-up"
               onClick={(e) => e.stopPropagation()}
               style={{ animationDelay: '0.1s' }}
