@@ -140,6 +140,21 @@ Lista de aprendizados reutilizados:
 - Resultados de testes (se houver)
 - Padrões de CTA que funcionaram
 - Hierarquia de conteúdo
+- Design 3D e efeitos visuais persuasivos
+
+#### 🔍 SEO e Compartilhamento Social
+- Meta tags (Open Graph, Twitter Cards)
+- Structured Data (Schema.org)
+- Preview de compartilhamento (og:image, twitter:image)
+- Favicons e apple-touch-icons
+- Configuração de URLs canônicas
+
+#### 📊 Analytics e Rastreamento
+- Google Tag Manager (GTM)
+- Eventos customizados
+- Scroll depth tracking
+- Section view tracking
+- Integração de analytics
 
 ### Exemplo de Boa Documentação
 
@@ -161,16 +176,35 @@ Lista de aprendizados reutilizados:
 
 ### Checklist para Cada Novo Projeto
 
+#### Estrutura e Design
 - [ ] Criar seção com nome e ícone do projeto
 - [ ] Documentar conceito de design e paleta
 - [ ] Listar todas as seções da landing page
 - [ ] Documentar tecnologias utilizadas
+
+#### Documentação Técnica
 - [ ] Registrar erros encontrados (com soluções)
 - [ ] Documentar acertos e implementações bem-sucedidas
 - [ ] Incluir código relevante quando necessário
 - [ ] Referenciar aprendizados de projetos anteriores
+
+#### SEO e Compartilhamento
+- [ ] Configurar meta tags (title, description, keywords)
+- [ ] Configurar Open Graph (og:image, og:title, og:description)
+- [ ] Configurar Twitter Cards
+- [ ] Configurar favicon e apple-touch-icon
+- [ ] Testar preview de compartilhamento (Facebook Sharing Debugger, Twitter Card Validator)
+
+#### Analytics e Rastreamento
+- [ ] Configurar Google Tag Manager (se aplicável)
+- [ ] Implementar tracking de eventos (CTAs, WhatsApp clicks)
+- [ ] Configurar scroll depth tracking
+- [ ] Testar eventos no modo Preview do GTM
+
+#### Finalização
 - [ ] Atualizar status do projeto
 - [ ] Listar próximos passos
+- [ ] Documentar melhorias futuras possíveis
 
 ---
 

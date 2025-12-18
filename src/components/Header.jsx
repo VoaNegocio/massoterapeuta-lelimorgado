@@ -15,8 +15,8 @@ function Header() {
       {/* Mobile Header - Mantido intacto */}
       <header className="fixed top-0 left-0 right-0 z-50 md:hidden">
         {/* Blur e Background Branco */}
-        <div className="absolute inset-0 bg-white/50 backdrop-blur-xl border-b border-neutral-200/50"></div>
-        
+        <div className="absolute inset-0 bg-white/40 backdrop-blur-xl border-b border-neutral-200/50"></div>
+
         <div className="relative max-w-7xl mx-auto px-3">
           <div className="flex items-center justify-center h-20">
             {/* Logo - Clicável para topo */}
@@ -28,7 +28,7 @@ function Header() {
               <img
                 src="/logo-da-leli.png"
                 alt="Leli Morgado Massoterapeuta"
-                className="h-14 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+                className="h-16 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
               />
             </button>
           </div>
@@ -38,8 +38,8 @@ function Header() {
       {/* Desktop Header - Premium */}
       <header className="hidden md:block fixed top-0 left-0 right-0 z-50">
         {/* Glassmorphism Premium */}
-        <div className="absolute inset-0 bg-white/75 backdrop-blur-2xl border-b border-neutral-200/60 shadow-lg shadow-neutral-900/5"></div>
-        
+        <div className="absolute inset-0 bg-white/60 backdrop-blur-2xl border-b border-neutral-200/60 shadow-lg shadow-neutral-900/5"></div>
+
         <div className="relative max-w-7xl xl:max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-8 lg:px-12 xl:px-16 2xl:px-20">
           <div className="flex items-center justify-between h-28 lg:h-32 xl:h-36 2xl:h-40">
             {/* Logo - Clicável para topo */}
@@ -51,7 +51,7 @@ function Header() {
               <img
                 src="/logo-da-leli.png"
                 alt="Leli Morgado Massoterapeuta"
-                className="h-20 lg:h-24 xl:h-28 2xl:h-32 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+                className="h-24 lg:h-28 xl:h-32 2xl:h-36 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
               />
             </button>
 
