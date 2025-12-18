@@ -8,4 +8,13 @@ export default defineConfig({
     postcss: './postcss.config.js',
     devSourcemap: true,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+        },
+      },
+    },
+  },
 })

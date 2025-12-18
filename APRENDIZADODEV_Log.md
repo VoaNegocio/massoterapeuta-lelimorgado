@@ -212,6 +212,54 @@ Lista de aprendizados reutilizados:
 
 ---
 
+## ⚡ Padrões de Otimização de Velocidade (Mandatório)
+### Regras para Manter o Site Rápido (PageSpeed 90+)
+
+Todo novo desenvolvimento ou alteração DEVE seguir estas regras de ouro para garantir performance máxima.
+
+#### 1. Code Splitting (Divisão de Código)
+- **Regra**: Componentes que não aparecem na primeira dobra (viewport inicial) DEVEM ser carregados via `React.lazy`.
+- **Implementação**:
+  ```javascript
+  // App.jsx
+  const ComponentePesado = lazy(() => import('./components/ComponentePesado'))
+  
+  // No JSX
+  <Suspense fallback={<Loading />}>
+     <ComponentePesado />
+  </Suspense>
+  ```
+- **Exceção**: `Header`, `Hero` e `Footer` (se simples) devem ser importados normalmente para evitar Layout Shift (CLS) na entrada.
+
+#### 2. Chunking de Vendor (Vite)
+- **Regra**: Separar bibliotecas pesadas (React, ReactDOM, Framer Motion) do bundle principal.
+- **Configuração (`vite.config.js`)**:
+  ```javascript
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          // adicione outras libs grandes aqui
+        },
+      },
+    },
+  }
+  ```
+
+#### 3. Otimização de Imagens e Mídia
+- **Formato**: Use sempre WebP ou AVIF para imagens estáticas.
+- **Lazy Loading**: TODAS as imagens abaixo da primeira dobra DEVEM ter `loading="lazy"`.
+- **Dimensões**: Sempre especifique `width` e `height` (ou aspect-ratio via CSS) para evitar CLS.
+- **Vídeos**: Use `preload="none"` e carregue apenas com interação do usuário (modal) ou use thumbnails leves como placeholder.
+
+#### 4. Tags de Performance (`index.html`)
+- **Preconnect**: Use para domínios externos críticos (Google Fonts, Analytics).
+- **DNS Prefetch**: Para domínios secundários.
+- **Meta Viewport**: Garanta `width=device-width, initial-scale=1.0`.
+
+---
+
 ## 🔴 PROBLEMA CRÍTICO RECORRENTE: Tailwind CSS v4 não carrega no modo dev do Vite
 
 ### ⚠️ IMPORTÂNCIA
