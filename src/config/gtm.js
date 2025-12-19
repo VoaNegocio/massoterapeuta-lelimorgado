@@ -1,7 +1,7 @@
 // Google Tag Manager Configuration
 // Substitua GTM-XXXXXXX pelo seu Container ID do Google Tag Manager
 
-export const GTM_ID = 'GTM-XXXXXXX'
+export const GTM_ID = 'GTM-WG8ZQNFV'
 
 // Função helper para enviar eventos ao GTM
 export const gtmEvent = (eventName, eventData = {}) => {
