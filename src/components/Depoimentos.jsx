@@ -21,7 +21,7 @@ function Depoimentos() {
     {
       nome: 'Dra Camila Exel',
       video: '/videos/video3.mp4',
-      foto: '/maria-isabel-img1.jpg', // Foto da cliente como preview
+      foto: '/camila-exel-img1.jpg', // Foto da cliente como preview
       avaliacao: 5,
     },
   ]
@@ -158,8 +158,8 @@ function Depoimentos() {
                     card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
                   }}
                   className={`h-2 rounded-full transition-all ${index === currentIndex
-                      ? 'bg-green-600 w-8'
-                      : 'bg-neutral-300 w-2'
+                    ? 'bg-green-600 w-8'
+                    : 'bg-neutral-300 w-2'
                     }`}
                   aria-label={`Ir para depoimento ${index + 1}`}
                 />
